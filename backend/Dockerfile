@@ -1,26 +1,29 @@
-FROM python:3.9-slim
+FROM maven:3.6.1-jdk-11
 
-# 设置工作目录
-WORKDIR /app
+ENV LANG=C.UTF-8 LC_ALL=C.UTF-8
 
-# 安装系统依赖
-RUN apt-get update && apt-get install -y \
-    gcc \
-    g++ \
-    libpq-dev \
-    && rm -rf /var/lib/apt/lists/*
+MAINTAINER Ling Li
 
-# 复制依赖文件
-COPY requirements.txt .
+# Download and install dockerize.
+# Needed so the web container will wait for MariaDB to start.
+ENV DOCKERIZE_VERSION v0.6.1
+RUN wget --no-verbose https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz \
+    && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
-# 安装Python依赖
-RUN pip install --no-cache-dir -r requirements.txt
 
-# 复制应用代码
-COPY . .
+EXPOSE 8180
+EXPOSE 8443
+WORKDIR /code
 
-# 暴露端口
-EXPOSE 8000
+VOLUME ["/code"]
 
-# 启动命令
-CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Copy the application's code
+COPY . /code
+
+# Wait for the db to startup(via dockerize), then 
+# Build and run steve, requires a db to be available on port 3306
+CMD dockerize -wait tcp://mariadb:3306 -timeout 60s && \
+	mvn clean package -Pdocker -Djdk.tls.client.protocols="TLSv1,TLSv1.1,TLSv1.2" && \
+	java -jar target/steve.jar
+

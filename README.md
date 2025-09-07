@@ -1,258 +1,286 @@
-# Xcharge AI CSMS Platform
+# XCharge Digital CSMS Platform
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/downloads/)
-[![React 18](https://img.shields.io/badge/React-18-blue.svg)](https://reactjs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)](https://fastapi.tiangolo.com/)
+[![Java 11](https://img.shields.io/badge/Java-11-blue.svg)](https://www.oracle.com/java/)
+[![Spring Boot](https://img.shields.io/badge/Spring%20Boot-5.3+-green.svg)](https://spring.io/projects/spring-boot)
+[![OCPP](https://img.shields.io/badge/OCPP-1.2%2C%201.5%2C%201.6-orange.svg)](https://www.openchargealliance.org/)
 
 > **Intelligent Electric Vehicle Charging Station Management System**
 
-A modern, AI-powered electric vehicle charging station management platform with real-time monitoring, user management, payment processing, and advanced analytics capabilities.
+A comprehensive, Java-based Charging Station Management System (CSMS) built on the SteVe platform, supporting OCPP 1.2, 1.5, and 1.6 protocols with advanced features for EV charging infrastructure management.
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-- **Python 3.9+**
-- **Node.js 16+**
-- **PostgreSQL 13+**
-- **Redis 6+**
+- **Java 11+**
+- **Maven 3.6+**
+- **MySQL 8.0+**
 - **Docker** (optional)
 
 ### Installation
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/ev-charging-csms.git
+   git clone https://github.com/Xchargedigital/ev-charging-csms.git
    cd ev-charging-csms
    ```
 
-2. **Set up environment variables**
+2. **Set up database**
    ```bash
-   cp env.example .env
-   # Edit .env with your configuration
+   # Create MySQL database
+   mysql -u root -p
+   CREATE DATABASE xcharge_csms;
    ```
 
-3. **Install dependencies**
+3. **Configure application**
    ```bash
-   # Backend
+   # Copy and edit configuration
+   cp backend/src/main/resources/config/prod/main.properties backend/src/main/resources/config/prod/main.properties.local
+   # Edit database connection settings
+   ```
+
+4. **Build and run**
+   ```bash
+   # Build the project
    cd backend
-   pip install -r requirements.txt
+   mvn clean package -DskipTests
    
-   # Frontend
-   cd ../frontend
-   npm install
-   ```
-
-4. **Start the services**
-   ```bash
-   # Using startup script (Windows)
-   ./start.bat
-   
-   # Or using Docker Compose
-   docker-compose up --build
+   # Run the application
+   java -jar target/cms.jar
    ```
 
 5. **Access the application**
-   - **Frontend**: http://localhost:3000
-   - **Backend API**: http://localhost:8000
-   - **API Documentation**: http://localhost:8000/docs
+   - **Web Interface**: http://localhost:8080/steve
+   - **OCPP Endpoint**: ws://localhost:8080/steve/websocket/CentralSystemService
+   - **REST API**: http://localhost:8080/steve/api
 
 ## 🏗️ Architecture
 
 ```
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Frontend      │    │   Backend       │    │   Mobile App    │
-│   (React)       │◄──►│   (FastAPI)     │◄──►│   (React Native)│
+│   Web Frontend  │    │   CSMS Server   │    │   Mobile App    │
+│   (JSP/JS)      │◄──►│   (Java/Spring) │◄──►│   (React Native)│
 └─────────────────┘    └─────────────────┘    └─────────────────┘
          │                       │                       │
          │                       │                       │
          ▼                       ▼                       ▼
 ┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   Web Browser   │    │   PostgreSQL    │    │   App Store     │
-│   (Chrome/Safari)│    │   + Redis       │    │   (iOS/Android) │
+│   Web Browser   │    │   MySQL DB      │    │   App Store     │
+│   (Chrome/Safari)│    │   + JOOQ        │    │   (iOS/Android) │
 └─────────────────┘    └─────────────────┘    └─────────────────┘
 ```
 
 ## 🎯 Key Features
 
-### Core Functionality
-- **🔌 Charging Station Management**: Real-time monitoring, power management, fault diagnosis
-- **👥 User Management**: Registration, authentication, charging history, balance management
-- **💳 Payment System**: Multiple payment methods, automatic settlement, invoice management
-- **📊 Data Analytics**: Charging statistics, revenue analysis, usage trends
-- **🗺️ Map Services**: Station location display, navigation, booking functionality
-- **📱 Mobile App**: User app, charging station operation interface
+### Core CSMS Functionality
+- **🔌 OCPP Protocol Support**: Full support for OCPP 1.2, 1.5, and 1.6
+- **⚡ Charging Station Management**: Real-time monitoring, remote control, diagnostics
+- **👥 User Management**: OCPP tag management, user authentication, access control
+- **📊 Transaction Management**: Charging session tracking, billing, reporting
+- **🔧 Configuration Management**: Remote configuration, firmware updates
+- **📱 Web Interface**: Modern web-based management dashboard
 
-### Technical Features
-- **⚡ Real-time Communication**: WebSocket for live data streaming
-- **🏗️ Microservices Architecture**: Modular design, easy to scale
-- **🐳 Cloud Native**: Docker containerization support
-- **🔄 High Availability**: Load balancing, fault tolerance
-- **🔒 Security**: JWT authentication, data encryption, access control
+### Advanced Features
+- **🌐 Multi-Protocol Support**: SOAP and JSON WebSocket communication
+- **🔒 Security**: Authentication, authorization, secure communication
+- **📈 Analytics**: Usage statistics, performance monitoring, reporting
+- **🔄 Real-time Updates**: WebSocket-based live status updates
+- **🗄️ Data Management**: Comprehensive data storage and retrieval
+- **🚀 Scalability**: High-performance architecture for large deployments
 
 ## 🛠️ Technology Stack
 
 ### Backend
-- **Framework**: FastAPI (Python 3.9+)
-- **Database**: PostgreSQL + Redis
-- **Message Queue**: RabbitMQ
-- **Real-time**: WebSocket
-- **Authentication**: JWT + OAuth2
-- **Payments**: Alipay, WeChat Pay, UnionPay
+- **Framework**: Spring Boot 5.3+ with Spring MVC
+- **Database**: MySQL 8.0+ with JOOQ ORM
+- **Web Server**: Jetty 9.4+
+- **Protocol**: OCPP 1.2, 1.5, 1.6 (SOAP & JSON)
+- **Security**: Spring Security
+- **Build Tool**: Maven 3.6+
 
 ### Frontend
-- **Framework**: React 18 + TypeScript
-- **UI Library**: Ant Design + Tailwind CSS
-- **State Management**: Redux Toolkit
-- **Maps**: Amap API
-- **Charts**: ECharts
-
-### Mobile
-- **Framework**: React Native
-- **Navigation**: React Navigation
-- **State Management**: Redux Toolkit
-- **Payments**: Native payment SDKs
+- **Technology**: JSP + jQuery + Bootstrap
+- **UI Components**: Custom CSMS management interface
+- **Charts**: Real-time status monitoring
+- **Responsive**: Mobile-friendly design
 
 ### Infrastructure
 - **Containerization**: Docker + Docker Compose
 - **Orchestration**: Kubernetes
-- **Monitoring**: Prometheus + Grafana
-- **Logging**: ELK Stack
-- **CI/CD**: GitHub Actions
+- **Monitoring**: Log4j2 logging
+- **CI/CD**: Maven-based build pipeline
 
 ## 📁 Project Structure
 
 ```
 ev-charging-csms/
-├── backend/                 # Backend services
-│   ├── app/
-│   │   ├── core/           # Core configuration
-│   │   ├── api/            # API routes
-│   │   ├── models/         # Data models
-│   │   ├── schemas/        # Data schemas
-│   │   ├── services/       # Business logic
-│   │   └── utils/          # Utility functions
-│   ├── requirements.txt    # Python dependencies
-│   ├── Dockerfile         # Docker configuration
-│   └── main.py            # Main application
-├── frontend/               # Web frontend
-│   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── pages/          # Page components
-│   │   ├── services/       # API services
-│   │   └── utils/          # Utility functions
-│   ├── package.json        # Node.js dependencies
-│   └── Dockerfile         # Docker configuration
-├── mobile/                 # Mobile app (React Native)
-├── docs/                   # Documentation
-├── scripts/                # Deployment scripts
-├── k8s/                    # Kubernetes configuration
-├── docker/                 # Docker configuration
-├── docker-compose.yml      # Docker Compose configuration
-├── start.bat              # Startup script
-└── README.md              # Project documentation
+├── backend/                    # CSMS Server (Java/Spring)
+│   ├── src/main/java/com/xcharge/digital/cms/
+│   │   ├── Application.java           # Main application class
+│   │   ├── ocpp/                     # OCPP protocol implementation
+│   │   │   ├── ws/                   # WebSocket handlers
+│   │   │   └── ...                   # Protocol-specific code
+│   │   ├── web/                      # Web controllers
+│   │   │   ├── controller/           # MVC controllers
+│   │   │   ├── api/                  # REST API endpoints
+│   │   │   └── dto/                  # Data transfer objects
+│   │   ├── service/                  # Business logic services
+│   │   ├── repository/               # Data access layer
+│   │   │   ├── impl/                 # Repository implementations
+│   │   │   └── dto/                  # Database DTOs
+│   │   ├── config/                   # Configuration classes
+│   │   └── utils/                    # Utility functions
+│   ├── src/main/resources/
+│   │   ├── config/                   # Environment configurations
+│   │   │   ├── dev/                  # Development config
+│   │   │   ├── prod/                 # Production config
+│   │   │   └── docker/               # Docker config
+│   │   ├── db/migration/             # Database migration scripts
+│   │   └── webapp/                   # Web application resources
+│   │       ├── static/               # CSS, JS, images
+│   │       └── WEB-INF/views/        # JSP pages
+│   ├── k8s/                          # Kubernetes configurations
+│   ├── pom.xml                       # Maven configuration
+│   └── Dockerfile                    # Docker configuration
+├── frontend/                         # React frontend (optional)
+├── mobile/                           # Mobile app (React Native)
+├── docs/                             # Documentation
+├── scripts/                          # Deployment scripts
+└── README.md                         # Project documentation
 ```
 
 ## 🔧 Development
 
-### API Design
-- Follows RESTful design principles
-- Unified response format
-- Complete error handling
-- Detailed API documentation
+### Building the Project
+```bash
+# Clean and compile
+mvn clean compile
 
-### Database Design
-- Normalized design
-- Index optimization
-- Foreign key constraints
-- Data integrity
+# Run tests
+mvn test
 
-### Security Design
-- JWT token authentication
-- Encrypted password storage
-- API permission control
-- Encrypted data transmission
+# Package application
+mvn package -DskipTests
 
-## 📊 Core Modules
+# Run application
+java -jar target/cms.jar
+```
 
-### 1. Charging Station Management
-- Station registration and configuration
-- Real-time status monitoring
-- Fault diagnosis and alerts
-- Remote control and maintenance
+### Database Setup
+```bash
+# Create database
+mysql -u root -p -e "CREATE DATABASE xcharge_csms;"
 
-### 2. User System
-- User registration and login
-- Identity authentication and authorization
-- Vehicle management
-- Charging history query
+# Run migrations (automatic on startup)
+# Or manually:
+mysql -u root -p xcharge_csms < src/main/resources/db/migration/V0_6_6__inital.sql
+```
 
-### 3. Payment System
-- Multiple payment methods
-- Automatic billing
-- Invoice management
-- Refund processing
+### Configuration
+Edit `src/main/resources/config/prod/main.properties`:
+```properties
+# Database configuration
+db.ip=localhost
+db.port=3306
+db.schema=xcharge_csms
+db.user=root
+db.password=your_password
 
-### 4. Data Analytics
-- Charging data statistics
-- Revenue analysis
-- User behavior analysis
-- Equipment utilization analysis
+# Server configuration
+server.port=8080
+server.host=0.0.0.0
 
-### 5. Map Services
-- Charging station location display
-- Route planning
-- Booking functionality
-- Real-time status updates
+# OCPP configuration
+ocpp.websocket.enabled=true
+ocpp.soap.enabled=true
+```
+
+## 📊 OCPP Protocol Support
+
+### Supported OCPP Versions
+- **OCPP 1.2**: Core functionality and basic operations
+- **OCPP 1.5**: Enhanced features and improved security
+- **OCPP 1.6**: Latest features including smart charging
+
+### Key OCPP Operations
+- **Core Profile**: Authorize, Start/Stop Transaction, Meter Values
+- **Firmware Management**: Update Firmware, Get Diagnostics
+- **Remote Control**: Remote Start/Stop Transaction, Unlock Connector
+- **Configuration**: Change Configuration, Get Configuration
+- **Reservations**: Reserve Now, Cancel Reservation
+- **Smart Charging**: Set Charging Profile, Clear Charging Profile
 
 ## 🚀 Deployment
 
 ### Docker Deployment
 ```bash
-# Build and run with Docker Compose
-docker-compose up --build
+# Build Docker image
+docker build -t xcharge-csms .
 
-# Run in production mode
-docker-compose -f docker-compose.prod.yml up -d
+# Run with Docker Compose
+docker-compose up -d
 ```
 
 ### Kubernetes Deployment
 ```bash
 # Apply Kubernetes configurations
-kubectl apply -f k8s/
+kubectl apply -f backend/k8s/yaml/
 
 # Check deployment status
 kubectl get pods
+kubectl get services
 ```
 
-### AWS Deployment
-The application is currently deployed on AWS with the following services:
-- **EC2**: Application servers
-- **RDS**: PostgreSQL database
-- **ElastiCache**: Redis cache
-- **S3**: File storage
-- **CloudFront**: CDN
+### Production Deployment
+1. **Database Setup**: Configure MySQL with proper security
+2. **Application Configuration**: Update production properties
+3. **SSL/TLS**: Configure HTTPS for secure communication
+4. **Monitoring**: Set up logging and monitoring
+5. **Load Balancing**: Configure for high availability
 
-## 📈 Roadmap
+## 📈 Features Overview
 
-### Phase 1: Core Features ✅
-- [x] Project architecture design
-- [x] User authentication system
-- [x] Charging station management
-- [x] Basic API development
+### For Charging Station Operators
+- Real-time station monitoring and control
+- Transaction management and billing
+- User and access management
+- Configuration and firmware updates
+- Comprehensive reporting and analytics
 
-### Phase 2: Advanced Features 🚧
-- [ ] Payment system integration
-- [ ] Real-time monitoring
-- [ ] Map services
-- [ ] Mobile app development
+### For EV Drivers
+- Station finder and status information
+- Reservation management
+- Transaction history
+- Payment processing integration
 
-### Phase 3: AI Features 📋
-- [ ] Data analytics
-- [ ] Smart recommendations
-- [ ] Fault prediction
-- [ ] Performance optimization
+### For System Administrators
+- Multi-tenant support
+- User management and permissions
+- System configuration
+- Monitoring and alerting
+- Data export and reporting
+
+## 🔒 Security Features
+
+- **Authentication**: User login and session management
+- **Authorization**: Role-based access control
+- **Data Encryption**: Secure data transmission
+- **OCPP Security**: Secure OCPP communication
+- **Audit Logging**: Comprehensive activity logging
+
+## 📚 API Documentation
+
+### REST API Endpoints
+- `GET /steve/api/chargepoints` - List charging stations
+- `GET /steve/api/transactions` - List transactions
+- `GET /steve/api/ocpp-tags` - List OCPP tags
+- `POST /steve/api/chargepoints/{id}/operations` - Execute operations
+
+### OCPP WebSocket Endpoints
+- `ws://localhost:8080/steve/websocket/CentralSystemService` - OCPP 1.6 JSON
+- `ws://localhost:8080/steve/websocket/CentralSystemService15` - OCPP 1.5 JSON
+- `ws://localhost:8080/steve/websocket/CentralSystemService12` - OCPP 1.2 JSON
 
 ## 🤝 Contributing
 
@@ -270,38 +298,38 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 📞 Support
 
-- **Documentation**: [Project Wiki](https://github.com/yourusername/ev-charging-csms/wiki)
-- **Issues**: [GitHub Issues](https://github.com/yourusername/ev-charging-csms/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/yourusername/ev-charging-csms/discussions)
+- **Documentation**: [Project Wiki](https://github.com/Xchargedigital/ev-charging-csms/wiki)
+- **Issues**: [GitHub Issues](https://github.com/Xchargedigital/ev-charging-csms/issues)
+- **Discussions**: [GitHub Discussions](https://github.com/Xchargedigital/ev-charging-csms/discussions)
 
 ## 🎯 Business Value
 
-### For Operators
-- Increase charging station utilization
-- Reduce operational costs
-- Improve user experience
-- Increase revenue
+### For Charging Network Operators
+- Comprehensive charging station management
+- Real-time monitoring and control
+- Advanced analytics and reporting
+- Scalable and reliable platform
 
-### For Users
-- Convenient charging services
-- Transparent pricing information
-- Multiple payment methods
+### For EV Drivers
+- Easy station discovery and access
+- Reliable charging services
+- Transparent pricing and billing
 - Excellent user experience
 
-### For Industry
-- Promote EV adoption
-- Advance charging infrastructure
-- Improve industry standards
-- Support green transportation
+### For the EV Industry
+- Standard OCPP compliance
+- Open source and extensible
+- Industry best practices
+- Future-ready architecture
 
 ---
 
-**Making Electric Vehicle Charging Smarter and More Convenient!** ⚡🚗
+**Powering the Future of Electric Vehicle Charging Infrastructure** ⚡🚗
 
 ## 📚 Additional Documentation
 
 - [Getting Started Guide](GETTING_STARTED.md)
-- [Project Overview](PROJECT_OVERVIEW.md)
-- [API Documentation](http://localhost:8000/docs)
+- [OCPP Implementation Guide](docs/ocpp.md)
+- [API Documentation](http://localhost:8080/steve/api)
 - [Deployment Guide](docs/deployment.md)
 - [Development Guide](docs/development.md)

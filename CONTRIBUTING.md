@@ -5,18 +5,21 @@ Thank you for your interest in contributing to the Xcharge AI CSMS Platform! Thi
 ## 🤝 How to Contribute
 
 ### Reporting Issues
+
 - Use the GitHub issue tracker to report bugs
 - Include detailed information about the issue
 - Provide steps to reproduce the problem
 - Include system information and logs
 
 ### Suggesting Features
+
 - Use the GitHub issue tracker with the "enhancement" label
 - Provide a clear description of the proposed feature
 - Explain the use case and benefits
 - Consider implementation complexity
 
 ### Code Contributions
+
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
@@ -27,6 +30,7 @@ Thank you for your interest in contributing to the Xcharge AI CSMS Platform! Thi
 ## 📋 Development Guidelines
 
 ### Code Style
+
 - Follow PEP 8 for Python code
 - Use TypeScript for frontend code
 - Use meaningful variable and function names
@@ -34,6 +38,7 @@ Thank you for your interest in contributing to the Xcharge AI CSMS Platform! Thi
 - Keep functions small and focused
 
 ### Commit Messages
+
 - Use clear, descriptive commit messages
 - Follow the format: `type(scope): description`
 - Examples:
@@ -42,6 +47,7 @@ Thank you for your interest in contributing to the Xcharge AI CSMS Platform! Thi
   - `docs(readme): update installation instructions`
 
 ### Testing
+
 - Write unit tests for new features
 - Ensure existing tests still pass
 - Test edge cases and error conditions
@@ -50,6 +56,7 @@ Thank you for your interest in contributing to the Xcharge AI CSMS Platform! Thi
 ## 🏗️ Development Setup
 
 ### Prerequisites
+
 - Python 3.9+
 - Node.js 16+
 - PostgreSQL 13+
@@ -57,6 +64,7 @@ Thank you for your interest in contributing to the Xcharge AI CSMS Platform! Thi
 - Git
 
 ### Setup Steps
+
 1. Fork and clone the repository
 2. Set up environment variables
 3. Install dependencies
@@ -64,7 +72,9 @@ Thank you for your interest in contributing to the Xcharge AI CSMS Platform! Thi
 5. Start development servers
 
 ### Environment Variables
+
 Copy `env.example` to `.env` and configure:
+
 ```bash
 cp env.example .env
 ```
@@ -79,22 +89,27 @@ cp env.example .env
 6. **Create PR**: Submit a pull request with detailed description
 
 ### Pull Request Template
+
 ```markdown
 ## Description
+
 Brief description of changes
 
 ## Type of Change
+
 - [ ] Bug fix
 - [ ] New feature
 - [ ] Breaking change
 - [ ] Documentation update
 
 ## Testing
+
 - [ ] Tests pass locally
 - [ ] New tests added for new functionality
 - [ ] Manual testing completed
 
 ## Checklist
+
 - [ ] Code follows style guidelines
 - [ ] Self-review completed
 - [ ] Documentation updated
@@ -104,6 +119,7 @@ Brief description of changes
 ## 🐛 Bug Reports
 
 When reporting bugs, please include:
+
 - **Description**: Clear description of the bug
 - **Steps to Reproduce**: Detailed steps to reproduce
 - **Expected Behavior**: What should happen
@@ -115,6 +131,7 @@ When reporting bugs, please include:
 ## 💡 Feature Requests
 
 When suggesting features, please include:
+
 - **Use Case**: Why is this feature needed?
 - **Proposed Solution**: How should it work?
 - **Alternatives**: Other solutions considered
@@ -144,18 +161,21 @@ When suggesting features, please include:
 ## 🎯 Areas for Contribution
 
 ### High Priority
+
 - Payment system integration
 - Real-time monitoring features
 - Mobile app development
 - API documentation improvements
 
 ### Medium Priority
+
 - Test coverage improvements
 - Performance optimizations
 - UI/UX enhancements
 - Documentation updates
 
 ### Low Priority
+
 - Code refactoring
 - Additional language support
 - Advanced analytics features
